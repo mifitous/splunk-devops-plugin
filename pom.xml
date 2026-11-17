@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>4.41</version>
+        <version>6.2250.va_d01d559a_209</version>
         <relativePath />
     </parent>
 
@@ -51,9 +51,10 @@
         <project.patchManagement.url>https://api.github.com</project.patchManagement.url>
         <patch.tracker.serverId>jenkins-jira</patch.tracker.serverId>
         <findbugs-maven-plugin.version>3.0.1</findbugs-maven-plugin.version>
-        <java.level>8</java.level>
         <!-- jenkins requirement -->
-        <jenkins.version>2.346.1</jenkins.version> <!-- plugin script-security and workflow-cps requirement -->
+        <jenkins.baseline>2.580</jenkins.baseline>
+        <jenkins.version>${jenkins.baseline}.1</jenkins.version>
+        <maven.compiler.release>21</maven.compiler.release>
         <spotbugs.failOnError>false</spotbugs.failOnError>
         <surefire.timeout>600</surefire.timeout>
     </properties>
@@ -88,11 +89,22 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.jenkins.tools.bom</groupId>
+                <artifactId>bom-${jenkins.baseline}.x</artifactId>
+                <version>7349.vd0a_cb_6c87a_31</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>com.splunk</groupId>
             <artifactId>splunk</artifactId>
-            <version>1.6.5.0</version>
+            <version>1.9.5</version>
             <scope>test</scope> <!--only used to setup token and execute search-->
         </dependency>
 
@@ -116,13 +128,6 @@
                     <url>${repos.url}</url>
                 </snapshotRepository>
             </distributionManagement>
-        </profile>
-        <profile>
-            <id>jenkins-2</id>
-            <properties>
-                <jenkins.version>2.346.1</jenkins.version>
-                <java.level>8</java.level>
-            </properties>
         </profile>
         <profile>
             <id>coverage</id>
@@ -164,8 +169,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
-                <configuration>
+                                <configuration>
                     <forkCount>2</forkCount>
                     <useFile>false</useFile>
                     <systemPropertyVariables>

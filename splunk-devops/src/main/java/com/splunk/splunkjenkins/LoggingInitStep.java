@@ -5,7 +5,7 @@ import hudson.init.Initializer;
 import hudson.util.PluginServletFilter;
 import jenkins.util.Timer;
 
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Handler;
 import java.util.logging.Level;
